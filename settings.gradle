@@ -1,0 +1,5 @@
+rootProject.name = 'car-rental'
+include 'core'
+include 'authorizer'
+include 'payments'
+
