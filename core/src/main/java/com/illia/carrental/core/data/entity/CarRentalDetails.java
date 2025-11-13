@@ -22,8 +22,7 @@ public class CarRentalDetails {
     @Column(name = "rate", nullable = false)
     private BigDecimal rate;
 
-
-    @OneToOne(mappedBy = "details", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "carRentalDetails", cascade = CascadeType.ALL)
     private Car car;
 
 }

@@ -29,4 +29,8 @@ public class CarReview {
     @Column(name = "car_id")
     private Long carId;
 
+    @ManyToOne
+    @JoinColumn(name = "car_id", insertable = false, updatable = false)
+    private Car car;
+
 }

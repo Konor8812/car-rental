@@ -25,6 +25,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public UserDTO authUserByHeader(String authorizationHeaderValue) {
+        System.out.println("Sending auth request");
         try {
             var body = createBody(authorizationHeaderValue);
 
@@ -35,6 +36,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                     .POST(HttpRequest.BodyPublishers.ofString(body))
                     .build();
             var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println("Response: " + response.body());
             return objectMapper.readValue(response.body(), UserDTO.class);
         } catch (Exception e) {
             e.printStackTrace();

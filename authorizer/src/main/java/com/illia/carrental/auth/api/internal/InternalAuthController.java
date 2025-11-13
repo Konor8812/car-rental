@@ -21,7 +21,8 @@ public class InternalAuthController {
     public ResponseEntity<UserDTO> authenticateUser(@RequestHeader("client-secret") String clientSecret,
                                                     @RequestBody AuthenticateUserRequest authenticateUserRequest) {
         clientSecretValidator.validate(clientSecret);
-        return ResponseEntity.ok(authenticationService.authenticate(authenticateUserRequest));
+        var auth = authenticationService.authenticate(authenticateUserRequest);
+        return ResponseEntity.ok(auth);
     }
 
 }

@@ -43,8 +43,9 @@ public class AuthenticationTokenServiceImpl implements AuthenticationTokenServic
     @Override
     public String extractEmailFromHeader(String authorizationHeaderValue) {
         checkTokenValid(authorizationHeaderValue);
+        var token = extractToken(authorizationHeaderValue);
 
-        return extractEmail(authorizationHeaderValue);
+        return extractEmail(token);
     }
 
     private void checkTokenValid(String authorizationHeaderValue) {

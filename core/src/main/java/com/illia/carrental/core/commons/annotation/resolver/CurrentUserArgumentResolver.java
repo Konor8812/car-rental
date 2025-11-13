@@ -27,6 +27,7 @@ public class CurrentUserArgumentResolver implements HandlerMethodArgumentResolve
                                   ModelAndViewContainer mavContainer,
                                   NativeWebRequest webRequest,
                                   WebDataBinderFactory binderFactory) {
+        System.out.println("CurrentUserArgumentResolver.resolveArgument");
         return userContext.getUser();
     }
 }

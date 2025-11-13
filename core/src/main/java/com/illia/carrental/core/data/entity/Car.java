@@ -31,11 +31,11 @@ public class Car {
     @Column(name = "year")
     private Integer year;
 
-    @OneToMany(mappedBy = "car")
+    @OneToMany(mappedBy = "car", fetch = FetchType.LAZY)
     private List<CarReview> reviews;
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "car_rentail_details_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "car_rental_details_id")
     private CarRentalDetails carRentalDetails;
 
 }

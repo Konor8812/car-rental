@@ -4,5 +4,5 @@ public class CarReservationStatusStatusConstants {
 
     public static final String AWAITS_PAYMENT = "awaits_payment";
     public static final String CANCELED = "canceled";
-    public static final String CONFIRMED = "reserved";
+    public static final String CONFIRMED = "confirmed";
 }

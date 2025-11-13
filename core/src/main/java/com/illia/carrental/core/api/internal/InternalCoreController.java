@@ -1,8 +1,6 @@
 package com.illia.carrental.core.api.internal;
 
-import com.illia.carrental.core.commons.annotation.CurrentUser;
-import com.illia.carrental.core.model.dto.UserDTO;
-import com.illia.carrental.core.service.CarRentalService;
+import com.illia.carrental.core.service.CarReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,16 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/internal")
+@RequestMapping("/v1/internal")
 @RequiredArgsConstructor
 public class InternalCoreController {
 
-    private final CarRentalService carRentalService;
+    private final CarReservationService carReservationService;
 
-    @PostMapping("/reservations/{reservation_id}/completed")
-    public ResponseEntity<Void> rentCar(@PathVariable(name = "reservation_id") Long reservationId,
-                                        @CurrentUser UserDTO user) {
-        carRentalService.completeReservation(reservationId, user);
+    @PostMapping("/reservations/{reservation_id}/confirm")
+    public ResponseEntity<Void> confirmReservation(@PathVariable(name = "reservation_id") Long reservationId) {
+        carReservationService.completeReservation(reservationId);
         return ResponseEntity.noContent().build();
     }
 }

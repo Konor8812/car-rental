@@ -7,6 +7,6 @@ public record CarDTO(Long id,
                      String manufacturer,
                      String model,
                      Integer year,
-                     RentalDetails rentalDetails,
+                     RentalDetailsDTO rentalDetails,
                      List<CarReviewDTO> reviews) {
 }
