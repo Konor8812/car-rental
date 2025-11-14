@@ -19,7 +19,6 @@ public class CarRentalCoreNotificator {
     public void notifyReservationCompleted(Long reservationId) {
         try {
             var url = buildUrl(reservationId);
-            System.out.println("Url: " + url);
             var request = HttpRequest.newBuilder()
                     .uri(URI.create(url))
                     .header("Content-Type", "application/json")

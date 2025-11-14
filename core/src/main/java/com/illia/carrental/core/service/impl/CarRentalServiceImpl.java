@@ -18,7 +18,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.illia.carrental.core.commons.constant.CarReservationStatusStatusConstants.*;
+import static com.illia.carrental.core.commons.constant.CarReservationStatusStatusConstants.AWAITS_PAYMENT;
+import static com.illia.carrental.core.commons.constant.CarReservationStatusStatusConstants.CONFIRMED;
 
 @RequiredArgsConstructor
 @Service

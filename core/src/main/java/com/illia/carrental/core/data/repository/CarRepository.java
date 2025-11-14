@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface CarRepository extends JpaRepository<Car, Long> {
 
     @Query(value = "SELECT c FROM Car c LEFT JOIN FETCH c.carRentalDetails",
-           countQuery = "SELECT COUNT(c) FROM Car c")
+            countQuery = "SELECT COUNT(c) FROM Car c")
     Page<Car> findByIdWithRentailDetailsLoaded(Pageable pageable);
 
     @Query(value = "SELECT c FROM Car c LEFT JOIN FETCH c.carRentalDetails WHERE c.id = :carId")

@@ -25,10 +25,8 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public String createPaymentLink(Long userId, Long reservationId, BigDecimal total) {
-        System.out.println("Args " + userId + " " + reservationId + " " + total);
         try {
             var body = createBody(userId, reservationId, total);
-            System.out.println("Request body: " + body);
             var request = HttpRequest.newBuilder()
                     .uri(URI.create(paymentConfig.getCreatePaymentLinkUrl()))
                     .header("Content-Type", "application/json")
@@ -36,7 +34,6 @@ public class PaymentServiceImpl implements PaymentService {
                     .POST(HttpRequest.BodyPublishers.ofString(body))
                     .build();
             var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            System.out.println("Response: " + response.body());
             var parsed = objectMapper.readValue(response.body(), CreatePaymentLinkResponse.class);
             return parsed.link();
         } catch (Exception e) {

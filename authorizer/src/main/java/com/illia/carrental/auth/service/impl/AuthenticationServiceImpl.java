@@ -12,6 +12,7 @@ import com.illia.carrental.auth.service.AuthenticationService;
 import com.illia.carrental.auth.service.AuthenticationTokenService;
 import com.illia.carrental.auth.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,21 +22,24 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final AuthenticationTokenService authenticationTokenService;
     private final UserService userService;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public AuthenticationResponse login(LoginUserRequest loginUserRequest) {
-        var user = userService.findUserByEmailAndPassword(
-                loginUserRequest.email(),
-                loginUserRequest.password());
-        var token = user.map(authenticationTokenService::createAuthorizationToken)
+        var token = userService.findUserByEmail(loginUserRequest.email())
+                .stream()
+                .filter(u -> passwordEncoder.matches(loginUserRequest.password(), u.getPassword()))
+                .map(authenticationTokenService::createAuthorizationToken)
                 .map(AuthenticationToken::getToken)
-                .orElseThrow(AuthenticationException::new);
-        return new AuthenticationResponse(token);
+                .findFirst();
+        return new AuthenticationResponse(token
+                .orElseThrow(AuthenticationException::new));
     }
 
     @Override
     public AuthenticationResponse createUser(RegisterUserRequest registerUserRequest) {
         var user = userMapper.toUser(registerUserRequest);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user = userService.saveUser(user);
         var token = authenticationTokenService.createAuthorizationToken(user).getToken();
         return new AuthenticationResponse(token);
@@ -49,7 +53,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public UserDTO authenticate(AuthenticateUserRequest authenticateUserRequest) {
         var email = authenticationTokenService.extractEmailFromHeader(authenticateUserRequest.authorizationHeaderValue());
-        var user = userService.findUserByEmail(email);
+        var user = userService.findUserByEmail(email)
+                .orElseThrow(AuthenticationException::new);
         return userMapper.toDTO(user);
     }
 }

@@ -24,7 +24,6 @@ public class PaymentsServiceImpl implements PaymentsService {
 
     @Override
     public CreatePaymentLinkResponse createPaymentLink(CreatePaymentLinkRequest request) {
-        System.out.println("Request " + request);
         var externalPaymentId = UUID.randomUUID().toString();
         var link = String.format("/payments/%s", externalPaymentId);
         var payment = Payment.builder()
@@ -39,7 +38,6 @@ public class PaymentsServiceImpl implements PaymentsService {
                 .build();
 
         paymentRepository.save(payment);
-        System.out.println("link " + payment.getPaymentLink());
         return new CreatePaymentLinkResponse(payment.getPaymentLink());
     }
 

@@ -20,7 +20,6 @@ import java.time.Instant;
 import java.util.List;
 
 import static com.illia.carrental.core.commons.constant.CarReservationStatusStatusConstants.*;
-import static com.illia.carrental.core.commons.constant.CarReservationStatusStatusConstants.AWAITS_PAYMENT;
 
 @Service
 @RequiredArgsConstructor

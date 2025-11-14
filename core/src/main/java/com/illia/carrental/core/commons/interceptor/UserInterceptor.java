@@ -17,14 +17,10 @@ public class UserInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest req, HttpServletResponse res, Object handler) {
-        System.out.println("Interceptor triggered " + req.getRequestURI());
         if ("OPTIONS".equalsIgnoreCase(req.getMethod())) {
-            System.out.println("OPTIONS REQUEST");
             return true;
         }
-        System.out.println(req.getHeader("Authorization"));
         var token = req.getHeader("authorization");
-        System.out.println("token: " + token);
         var user = authenticationService.authUserByHeader(token);
         userContext.setUser(user);
         return true;
