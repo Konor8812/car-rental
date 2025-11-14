@@ -7,22 +7,36 @@ export default function Header() {
     const navigate = useNavigate();
 
     return (
-        <header className="flex items-center justify-between gap-4">
+        <header className="flex items-center justify-between p-4 border-b">
+            {/* Left */}
             <Link to="/" className="text-2xl font-semibold">CarRental</Link>
-            <Link to="/reservations" className="text-2xl font-semibold">My reservations</Link>
-            <Link to="/cars" className="px-3 py-1 rounded hover:bg-gray-100">Browse cars</Link>
-            {token ? (
-                <button
-                    onClick={() => { logout(); navigate("/auth"); }}
-                    className="px-3 py-1 bg-red-500 text-white rounded"
-                >
-                    Logout
-                </button>
-            ) : (
-                <Link to="/auth" className="px-3 py-1 bg-blue-600 text-white rounded">
-                    Login / Register
+            <nav className="flex items-center gap-6">
+
+                <Link to="/reservations" className="text-lg hover:underline">
+                    My reservations
                 </Link>
-            )}
+            </nav>
+            <nav className="flex items-center gap-6">
+                <Link to="/cars" className="text-lg hover:underline">
+                    Browse cars
+                </Link>
+            </nav>
+                {/* Right */}
+                {token ? (
+                    <button
+                        onClick={() => {
+                            logout();
+                            navigate("/auth");
+                        }}
+                        className="px-3 py-1 bg-red-500 text-white rounded"
+                    >
+                        Logout
+                    </button>
+                ) : (
+                    <Link to="/auth" className="px-3 py-1 bg-blue-600 text-white rounded">
+                        Login / Register
+                    </Link>
+                )}
         </header>
-    );
+);
 }

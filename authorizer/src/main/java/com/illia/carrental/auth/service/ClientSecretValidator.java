@@ -14,6 +14,5 @@ public class ClientSecretValidator {
         if (!clientSecretAuthConfig.clientSecrets().contains(clientSecret)) {
             throw new ClientSecretAuthException();
         }
-
     }
 }

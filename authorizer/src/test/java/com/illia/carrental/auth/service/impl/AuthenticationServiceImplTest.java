@@ -1,6 +1,6 @@
 package com.illia.carrental.auth.service.impl;
 
-import com.illia.carrental.auth.commons.exception.AuthenticationException;
+import com.illia.carrental.auth.commons.exception.AuthException;
 import com.illia.carrental.auth.commons.mapper.UserMapper;
 import com.illia.carrental.auth.data.entity.AuthenticationToken;
 import com.illia.carrental.auth.data.entity.User;
@@ -88,7 +88,7 @@ class AuthenticationServiceImplTest {
 
         // then
         assertThatThrownBy(() -> authenticationService.login(loginRequest))
-                .isInstanceOf(AuthenticationException.class);
+                .isInstanceOf(AuthException.class);
     }
 
     @Test
@@ -103,7 +103,7 @@ class AuthenticationServiceImplTest {
 
         // then
         assertThatThrownBy(() -> authenticationService.login(loginRequest))
-                .isInstanceOf(AuthenticationException.class);
+                .isInstanceOf(AuthException.class);
         verify(authenticationTokenService, never()).createAuthorizationToken(any());
     }
 
@@ -184,6 +184,6 @@ class AuthenticationServiceImplTest {
 
         // then
         assertThatThrownBy(() -> authenticationService.authenticate(request))
-                .isInstanceOf(AuthenticationException.class);
+                .isInstanceOf(AuthException.class);
     }
 }

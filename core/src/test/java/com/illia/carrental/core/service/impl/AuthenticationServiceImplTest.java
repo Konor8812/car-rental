@@ -1,7 +1,6 @@
 package com.illia.carrental.core.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.illia.carrental.core.commons.exception.AuthException;
 import com.illia.carrental.core.config.AuthConfig;
 import com.illia.carrental.core.model.dto.UserDTO;
 import com.illia.carrental.core.service.AuthenticationService;
@@ -15,7 +14,6 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 class AuthenticationServiceImplTest {
@@ -69,10 +67,16 @@ class AuthenticationServiceImplTest {
     }
 
     @Test
-    void testAuthUserByHeader_fails_throwsAuthException() throws Exception {
-        when(httpClient.send(any(), any())).thenThrow(new RuntimeException("boom"));
+    void testAuthUserByHeader_fails_SetsNoUserInContextHolder() throws Exception {
+        HttpResponse<String> httpResponse = mock(HttpResponse.class);
+        when(httpResponse.statusCode()).thenReturn(401);
 
-        assertThatThrownBy(() -> authenticationService.authUserByHeader("Bearer xyz"))
-                .isInstanceOf(AuthException.class);
+        when(httpClient.send(
+                any(HttpRequest.class),
+                any(HttpResponse.BodyHandler.class)
+        )).thenReturn(httpResponse);
+
+        assertThat(authenticationService.authUserByHeader("Bearer abc"))
+                .isNull();
     }
 }

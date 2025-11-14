@@ -2,6 +2,7 @@ package com.illia.carrental.core.commons.annotation.resolver;
 
 import com.illia.carrental.core.commons.annotation.CurrentUser;
 import com.illia.carrental.core.commons.context.RequestUserContext;
+import com.illia.carrental.core.commons.exception.AuthException;
 import com.illia.carrental.core.model.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
@@ -27,6 +28,9 @@ public class CurrentUserArgumentResolver implements HandlerMethodArgumentResolve
                                   ModelAndViewContainer mavContainer,
                                   NativeWebRequest webRequest,
                                   WebDataBinderFactory binderFactory) {
+        if (userContext.getUser() == null) {
+            throw new AuthException("Authentication required");
+        }
         return userContext.getUser();
     }
 }

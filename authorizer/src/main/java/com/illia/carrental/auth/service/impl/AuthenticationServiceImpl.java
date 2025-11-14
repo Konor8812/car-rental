@@ -1,6 +1,6 @@
 package com.illia.carrental.auth.service.impl;
 
-import com.illia.carrental.auth.commons.exception.AuthenticationException;
+import com.illia.carrental.auth.commons.exception.AuthException;
 import com.illia.carrental.auth.commons.mapper.UserMapper;
 import com.illia.carrental.auth.data.entity.AuthenticationToken;
 import com.illia.carrental.auth.dto.UserDTO;
@@ -33,7 +33,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .map(AuthenticationToken::getToken)
                 .findFirst();
         return new AuthenticationResponse(token
-                .orElseThrow(AuthenticationException::new));
+                .orElseThrow(AuthException::new));
     }
 
     @Override
@@ -54,7 +54,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public UserDTO authenticate(AuthenticateUserRequest authenticateUserRequest) {
         var email = authenticationTokenService.extractEmailFromHeader(authenticateUserRequest.authorizationHeaderValue());
         var user = userService.findUserByEmail(email)
-                .orElseThrow(AuthenticationException::new);
+                .orElseThrow(AuthException::new);
         return userMapper.toDTO(user);
     }
 }
